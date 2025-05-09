@@ -1,36 +1,20 @@
 # Gamesmarket
-## Testing launching an application via Docker - backend(.net) + db(mssql) + client(react(vite)) + proxy(nginx)
-Running 4 containers together via docker-compose
+## Project Overview
+Setup for hosting in Azure-Supabase.
 
-## Running the Project with docker.
+## Changes:
+1. Updated from .NET 7 to .NET 9
 
-1. Run it all together:
+2. Moved from MSSQL to PostgreSQL.
 
-- Open the solution in Visual Studio or another IDE.
+3. Added .AsNoTracking(); in read-only queries to improves query performance and Reduces memory usage.
 
-- In Solution Explorer, set the docker-compose as startup project.
+4. DateCreated use DateTime.UtcNow instead of DateTime.Now because of PostgreSQL.
 
-- Click the Run button or use the following command to run in the terminal:
-   
-   In Gamesmarket\Gamesmarket
-   ```sh
-   docker-compose up -d
-    ```
-This will start the backend at 5000:80 port, frontend at 5001:3000 port, db at 1433:1433 port, proxy at 80:80 port.
- 
-The backend can be tested at http://localhost:5000/swagger and the frontend can be tested at http://localhost:5001
+5. Use manualChunks in frontend to split ts code into smaller pieces to improve performance.
 
-The entire project with all functionality can be viewed at http://localhost
+6. Created new migrations.
 
-2. Run the client only:
+7. Add DesignTimeDbContextFactory so EF Core tools can construct ApplicationDbContext during migrations.
 
-   In Gamesmarket\Gamesmarket.ReactWeb
-   ```sh
-   docker build -t client .
-   ```
-   ```sh
-   docker run -dp 5001:3000 client
-   ```
-This will start the frontend for testing at http://localhost:5001
-
-3. Data to log in as admin user: Email - admin@gmail.com Password - Qwe!23
+8. Add OnConfiguring to ApplicationDbContext to suppresses a warning (PendingModelChangesWarning) — its occurs when model changes aren't applied via migration.

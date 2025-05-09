@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export const API_URL = `http://localhost/api`;
-export const API_URL_IMG = `http://localhost/`;
+export const API_URL = `https://products-api1-cue8a2evdrgphfa6.germanywestcentral-01.azurewebsites.net/api`;
+export const API_URL_IMG = `https://products-api1-cue8a2evdrgphfa6.germanywestcentral-01.azurewebsites.net/`;
 
 const $api = axios.create({
   withCredentials: true,

@@ -40,7 +40,7 @@ namespace Gamesmarket.Service.Implementations
                 {
                     Email = model.Email,
                     Name = model.Name,
-                    DateCreated = DateTime.Now,
+                    DateCreated = DateTime.UtcNow,
                     CartId = user.Cart.Id,
                     GameId = model.GameId
                 };
@@ -69,6 +69,7 @@ namespace Gamesmarket.Service.Implementations
             {
                 var order = _orderRepository.GetAll() // Find the order by id and include related cart
                     .Include(x => x.Cart)
+                    .AsNoTracking()
                     .FirstOrDefault(x => x.Id == id);
 
                 if (order == null)

@@ -24,6 +24,7 @@ namespace Gamesmarket.Service.Implementations
             {
                 var games = await _gameRepository.GetAll()
                                 .OrderByDescending(g => g.Id)
+                                .AsNoTracking()
                                 .ToListAsync();
                 baseResponse.Data = games;
                 return baseResponse;
@@ -44,7 +45,7 @@ namespace Gamesmarket.Service.Implementations
             var baseResponse = new BaseResponse<IEnumerable<Game>>();
             try
             {
-                var gamesQuery = _gameRepository.GetAll();
+                var gamesQuery = _gameRepository.GetAll().AsNoTracking();
 
                 var games = ascending
                     ? await gamesQuery.OrderBy(g => g.ReleaseDate).ToListAsync()
@@ -69,7 +70,7 @@ namespace Gamesmarket.Service.Implementations
             var baseResponse = new BaseResponse<IEnumerable<Game>>();
             try
             {
-                var gamesQuery = _gameRepository.GetAll();
+                var gamesQuery = _gameRepository.GetAll().AsNoTracking();
 
                 var games = ascending
                     ? await gamesQuery.OrderBy(g => g.Price).ToListAsync()

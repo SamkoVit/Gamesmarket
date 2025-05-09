@@ -1,0 +1,23 @@
+# This is a generated file. Not intended for manual editing.
+version: "3.4"
+services:
+  backend:
+    build:
+      context: "C:\\Users\\Vitalii\\source\\repos\\Gamesmarket"
+      dockerfile: "Gamesmarket/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net7.0/Gamesmarket.dll"
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ASPNETCORE_STATICWEBASSETS: "/app/bin/Debug/net7.0/Gamesmarket.staticwebassets.runtime.CT.json"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "gamesmarket:dev"
+    ports: []
+    volumes:
+    - "C:\\Users\\Vitalii\\source\\repos\\Gamesmarket\\Gamesmarket:/app:rw"
+    - "C:\\Users\\Vitalii\\source\\repos\\Gamesmarket:/src:rw"
+    - "C:\\Users\\Vitalii\\.nuget\\packages:/root/.nuget/packages"
+    working_dir: "/app"

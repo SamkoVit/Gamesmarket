@@ -49,7 +49,7 @@ namespace Gamesmarket.Service.Implementations
                     return baseResponse;
                 }
 
-                var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
+                var user = await _context.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Email == request.Email);
                 if (user == null)
                 {
                     baseResponse.Description = "Unauthorized access.";
@@ -116,7 +116,7 @@ namespace Gamesmarket.Service.Implementations
                     return baseResponse;
                 }
 
-                var findUser = await _context.Users.FirstOrDefaultAsync(x => x.Email == request.Email);
+                var findUser = await _context.Users.AsNoTracking().FirstOrDefaultAsync(x => x.Email == request.Email);
                 if (findUser == null)
                 {
                     baseResponse.Description = $"User {request.Email} not found";
@@ -282,7 +282,7 @@ namespace Gamesmarket.Service.Implementations
             var baseResponse = new BaseResponse<string>();
             try
             {
-                var role = await _context.Roles.FirstOrDefaultAsync(r => r.NormalizedName == request.NewRole.ToUpper());
+                var role = await _context.Roles.AsNoTracking().FirstOrDefaultAsync(r => r.NormalizedName == request.NewRole.ToUpper());
                 if (role == null)
                 {
                     baseResponse.Description = "Requested role does not exist.";

@@ -21,12 +21,16 @@ namespace Gamesmarket.DAL.Repositories
 
         public async Task<Game> Get(int id)
         {
-            return await _db.Games.FirstOrDefaultAsync(x => x.Id == id);
+            return await _db.Games
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public Task<List<Game>> Select() 
         {
-            return _db.Games.ToListAsync();
+            return _db.Games
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<bool> Delete(Game entity)

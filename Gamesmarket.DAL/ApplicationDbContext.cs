@@ -3,19 +3,24 @@ using Gamesmarket.DAL.DataSeed;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Gamesmarket.DAL
 {
     public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<long>, long>
     {// Class for working with a database
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) 
-        {
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options) { }
 
-        }
         // Managing collection of objects in database with Entity Framework
         public DbSet<Game> Games { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<Order> Orders { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.ConfigureWarnings(w => w.Ignore(RelationalEventId.PendingModelChangesWarning));
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

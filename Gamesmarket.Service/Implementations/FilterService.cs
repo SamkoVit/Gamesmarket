@@ -24,6 +24,7 @@ namespace Gamesmarket.Service.Implementations
             {
                 var games = await _gameRepository.GetAll()
                     .Where(g => g.Name == searchQuery || g.Developer == searchQuery)
+                    .AsNoTracking()
                     .ToListAsync();
                 if (games == null || !games.Any())
                 {
@@ -52,6 +53,7 @@ namespace Gamesmarket.Service.Implementations
             {
                 var games = await _gameRepository.GetAll()
                                 .Where(g => g.GameGenre == genre)
+                                .AsNoTracking()
                                 .ToListAsync();
                 if (games == null || !games.Any())
                 {

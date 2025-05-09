@@ -18,7 +18,7 @@ builder.Services.AddEndpointsApiExplorer();
 // DataBase connection
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseNpgsql(connectionString));
 
 builder.Services.ConfigureRepositories();
 builder.Services.ConfigureServices();
@@ -57,7 +57,7 @@ app.MapFallbackToFile("/index.html"); // Serve index.html for all other routes, 
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    context.Database.EnsureCreated();
+    context.Database.Migrate();
 }
 
 app.Run();

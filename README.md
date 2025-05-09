@@ -1,8 +1,13 @@
 # Gamesmarket
 ## Project Overview
-This is my project focused on building a comprehensive ASP.NET Core Web API application with React to manage an online game store. The project demonstrates proficiency in RESTful API development, Entity Framework Core for data handling with MSSQL database, and integration of modern web technologies like React with TypeScript, MobX and Material UI. 
+This is my pet project focused on building a comprehensive ASP.NET Core Web API application with React to manage an online game store. The project demonstrates proficiency in RESTful API development, Entity Framework Core for data handling with MSSQL database, and integration of modern web technologies like React with TypeScript, MobX and Material UI. 
 
 The application includes features such as CRUD operations for games and users, search functionalities, user security is guaranteed by Beaver tokens with role-based access, ordering and shopping cart functionality for users, and web interface for admin and moderators to edit games data and users roles, which showcases my skills in full-stack web development.
+
+The entire functionality can be viewed at the link:
+https://orange-island-002961f03.6.azurestaticapps.net/
+
+It is on free hosting so you may need to wait a minute for everything to load.
 
 ## Architecture:
 Gamesmarket - the main project, which includes configuration and initialization of other projects and APIs.

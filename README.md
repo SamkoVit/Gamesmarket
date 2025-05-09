@@ -1,6 +1,7 @@
 # Gamesmarket
 ## Project Overview
 Setup for hosting in Azure-Supabase.
+https://orange-island-002961f03.6.azurestaticapps.net/
 
 ## Changes:
 1. Updated from .NET 7 to .NET 9

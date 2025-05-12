@@ -32,12 +32,16 @@ namespace Gamesmarket.DAL.Repositories
 
         public async Task<Cart> Get(int id)
         {
-            return await _db.Carts.FirstOrDefaultAsync(x => x.Id == id);
+            return await _db.Carts
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public Task<List<Cart>> Select()
         {
-            return _db.Carts.ToListAsync();
+            return _db.Carts
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<Cart> Update(Cart entity)

@@ -8,7 +8,7 @@ namespace Gamesmarket.Configurations
         {// Swagger - localhost:7202/swagger/index.html
             services.AddSwaggerGen(option =>
             {
-                option.SwaggerDoc("v1", new OpenApiInfo { Title = "Gamesmarket", Version = "v1" });
+                option.SwaggerDoc("v2", new OpenApiInfo { Title = "Gamesmarket", Version = "v2" });
                 option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme // Configure security definition for Bearer token
                 {
                     In = ParameterLocation.Header,

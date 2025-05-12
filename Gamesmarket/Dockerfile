@@ -7,7 +7,7 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Gamesmarket/Gamesmarket.csproj", "Gamesmarket/"]
-COPY ["GamesMarket.DAL/Gamesmarket.DAL.csproj", "GamesMarket.DAL/"]
+COPY ["Gamesmarket.DAL/Gamesmarket.DAL.csproj", "Gamesmarket.DAL/"]
 COPY ["Gamesmarket.Domain/Gamesmarket.Domain.csproj", "Gamesmarket.Domain/"]
 COPY ["Gamesmarket.Service/Gamesmarket.Service.csproj", "Gamesmarket.Service/"]
 COPY ["Gamesmarket.Interfaces/Gamesmarket.Interfaces.csproj", "Gamesmarket.Interfaces/"]

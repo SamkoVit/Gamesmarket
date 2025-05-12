@@ -7,20 +7,20 @@ using Microsoft.AspNetCore.Mvc;
 namespace Gamesmarket.Controllers
 {
     [ApiController]
-    [Route("api/filter")]
-    public class FilterController : ControllerBase
+    [Route("api/games/search")]
+    public class GameSearchController : ControllerBase
     {
-        private readonly IFilterService _filtereService;
+        private readonly IGameSearchService _gameSearchService;
 
-        public FilterController(IFilterService filterService)
+        public GameSearchController(IGameSearchService gameSearchService)
         {
-            _filtereService = filterService;
+            _gameSearchService = gameSearchService;
         }
 
-        [HttpGet("findGamesByNameOrDev/{searchQuery}")]
+        [HttpGet("by-name-or-developer/{searchQuery}")]
         public async Task<IActionResult> FindGamesByNameOrDev(string searchQuery)
         {
-            var response = await _filtereService.SearchGames(searchQuery);
+            var response = await _gameSearchService.SearchGames(searchQuery);
             if (response.StatusCode == Domain.Enum.StatusCode.OK)
             {
                 return Ok(response.Data);
@@ -32,10 +32,10 @@ namespace Gamesmarket.Controllers
             }
         }
 
-        [HttpGet("getGamesByGenre/{genre}")]
+        [HttpGet("by-genre/{genre}")]
         public async Task<IActionResult> GetGamesByGenre(GameGenre genre)
         {
-            var response = await _filtereService.GetGamesByGenre(genre);
+            var response = await _gameSearchService.GetGamesByGenre(genre);
             if (response.StatusCode == Domain.Enum.StatusCode.OK)
             {
                 return Ok(response.Data);

@@ -38,7 +38,10 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v2/swagger.json", "Gamesmarket v2");
+});
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

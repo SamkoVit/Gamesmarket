@@ -7,11 +7,11 @@ using Gamesmarket.Interfaces.Services;
 
 namespace Gamesmarket.Service.Implementations
 {
-    public class FilterService : IFilterService
+    public class GameSearchService : IGameSearchService
     {
         private readonly IBaseRepository<Game> _gameRepository;
 
-        public FilterService(IBaseRepository<Game> gameRepository)
+        public GameSearchService(IBaseRepository<Game> gameRepository)
         {
             _gameRepository = gameRepository;
         }
@@ -24,6 +24,7 @@ namespace Gamesmarket.Service.Implementations
             {
                 var games = await _gameRepository.GetAll()
                     .Where(g => g.Name == searchQuery || g.Developer == searchQuery)
+                    .AsNoTracking()
                     .ToListAsync();
                 if (games == null || !games.Any())
                 {
@@ -44,7 +45,6 @@ namespace Gamesmarket.Service.Implementations
             }
         }
 
-        // Get games by genre
         public async Task<IBaseResponse<IEnumerable<Game>>> GetGamesByGenre(GameGenre genre)
         {
             var baseResponse = new BaseResponse<IEnumerable<Game>>();
@@ -52,6 +52,7 @@ namespace Gamesmarket.Service.Implementations
             {
                 var games = await _gameRepository.GetAll()
                                 .Where(g => g.GameGenre == genre)
+                                .AsNoTracking()
                                 .ToListAsync();
                 if (games == null || !games.Any())
                 {

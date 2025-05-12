@@ -18,8 +18,8 @@ namespace Gamesmarket.Controllers
         }
 
         [Authorize]
-        [HttpGet("getDetail")]
-        public async Task<IActionResult> Detail()
+        [HttpGet]
+        public async Task<IActionResult> GetCart()
         {
             var response = await _cartService.GetItems(User.Identity.Name);
             if (response.StatusCode == Domain.Enum.StatusCode.OK)
@@ -35,7 +35,7 @@ namespace Gamesmarket.Controllers
         }
 
         [Authorize]
-        [HttpGet("getItem")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetItem(long id)
         {
             var response = await _cartService.GetItem(User.Identity.Name, id);

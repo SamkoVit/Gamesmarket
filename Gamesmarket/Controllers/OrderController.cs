@@ -19,7 +19,7 @@ namespace Gamesmarket.Controllers
         }
 
         [Authorize]
-        [HttpPost("createOrder")]
+        [HttpPost]
         public async Task<IActionResult> CreateOrder(CreateOrderViewModel model)
         {
              var response = await _orderService.Create(model);
@@ -36,8 +36,8 @@ namespace Gamesmarket.Controllers
         }
 
         [Authorize]
-        [HttpDelete("delete/{id}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteOrder(int id)
         {
             var response = await _orderService.Delete(id);
             if (response.StatusCode == Domain.Enum.StatusCode.OK)

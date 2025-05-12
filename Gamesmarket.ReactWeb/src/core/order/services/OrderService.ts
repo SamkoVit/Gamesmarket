@@ -12,7 +12,7 @@ export default class OrderService {
     gameId: number,
     login: string,
   ): Promise<AxiosResponse<OrderResponse>> {
-    return $api.post<OrderResponse>("/order/createOrder", {
+    return $api.post<OrderResponse>("/order", {
       quantity,
       dateCreated: dateCreated ? dateCreated.toISOString() : null,
       email,
@@ -23,6 +23,6 @@ export default class OrderService {
   }
 
   static deleteOrder(id: number): Promise<AxiosResponse<DeleteOrderResponse>> {
-    return $api.delete<DeleteOrderResponse>(`/order/delete/${id}`);
+    return $api.delete<DeleteOrderResponse>(`/order/${id}`);
   }
 }

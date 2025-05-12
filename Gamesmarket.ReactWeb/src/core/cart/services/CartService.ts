@@ -5,11 +5,11 @@ import { IGetOrder } from "../models/IGetOrder";
 
 export default class OrderService {
   static getDetail(): Promise<AxiosResponse<IGetOrders[]>> {
-    return $api.get<IGetOrders[]>("/cart/getDetail");
+    return $api.get<IGetOrders[]>("/cart");
   }
 
   static getItem(id: number): Promise<AxiosResponse<IGetOrder>> {
-    return $api.get<IGetOrder>(`/cart/getItem`, {
+    return $api.get<IGetOrder>(`/cart`, {
       params: { id },
     });
   }

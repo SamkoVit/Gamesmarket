@@ -6,15 +6,15 @@ import { DeleteGameResponse } from "../models/response/DeleteGameResponse";
 
 export default class GameService {
   static getGames(): Promise<AxiosResponse<IGame[]>> {
-    return $api.get<IGame[]>("/game/getGames");
+    return $api.get<IGame[]>("/games");
   }
 
   static getGame(id: number): Promise<AxiosResponse<IGame>> {
-    return $api.get<IGame>(`/game/getGame/${id}`);
+    return $api.get<IGame>(`/games/${id}`);
   }
 
   static createGame(formData: FormData): Promise<AxiosResponse<GamesResponse>> {
-    return $api.post<GamesResponse>("/game/createGame", formData, {
+    return $api.post<GamesResponse>("/games", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -25,7 +25,7 @@ export default class GameService {
     id: number,
     formData: FormData,
   ): Promise<AxiosResponse<GamesResponse>> {
-    return $api.patch<GamesResponse>(`/game/editGame/${id}`, formData, {
+    return $api.patch<GamesResponse>(`/games/${id}`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -33,6 +33,6 @@ export default class GameService {
   }
 
   static deleteGame(id: number): Promise<AxiosResponse<DeleteGameResponse>> {
-    return $api.delete<DeleteGameResponse>(`/game/delete/${id}`);
+    return $api.delete<DeleteGameResponse>(`/games/${id}`);
   }
 }

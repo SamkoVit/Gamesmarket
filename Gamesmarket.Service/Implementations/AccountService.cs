@@ -282,7 +282,7 @@ namespace Gamesmarket.Service.Implementations
             var baseResponse = new BaseResponse<string>();
             try
             {
-                var role = await _context.Roles.FirstOrDefaultAsync(r => r.NormalizedName == request.NewRole.ToUpper());
+                var role = await _context.Roles.AsNoTracking().FirstOrDefaultAsync(r => r.NormalizedName == request.NewRole.ToUpper());
                 if (role == null)
                 {
                     baseResponse.Description = "Requested role does not exist.";

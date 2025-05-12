@@ -6,20 +6,20 @@ using Microsoft.AspNetCore.Mvc;
 namespace Gamesmarket.Controllers
 {
     [ApiController]
-    [Route("api/sort")]
-    public class SortController : ControllerBase
+    [Route("api/games/sort")]
+    public class GameSortController : ControllerBase
     {
-        private readonly ISortService _sortService;
+        private readonly IGameSortService _sortService;
 
-        public SortController(ISortService sortService)
+        public GameSortController(IGameSortService sortService)
         {
             _sortService = sortService;
         }
 
-        [HttpGet("getGamesByIdDesc")]
-        public async Task<IActionResult> GetGamesByIdDesc()
+        [HttpGet("by-id-desc")]
+        public async Task<IActionResult> GetByIdDesc()
         {
-            var response = await _sortService.GetGamesByIdDesc();
+            var response = await _sortService.SortByIdDescending();
             if (response.StatusCode == Domain.Enum.StatusCode.OK)
             {
                 return Ok(response.Data);
@@ -31,10 +31,10 @@ namespace Gamesmarket.Controllers
             }
         }
 
-        [HttpGet("getGamesByReleaseDate/{ascending}")]
-        public async Task<IActionResult> GetGamesByReleaseDate(bool ascending)
+        [HttpGet("by-release-date/{ascending}")]
+        public async Task<IActionResult> GetByReleaseDate(bool ascending)
         {
-            var response = await _sortService.GetGamesByReleaseDate(ascending);
+            var response = await _sortService.SortByReleaseDate(ascending);
             if (response.StatusCode == Domain.Enum.StatusCode.OK)
             {
                 return Ok(response.Data);
@@ -46,10 +46,10 @@ namespace Gamesmarket.Controllers
             }
         }
 
-        [HttpGet("getGamesByPrice/{ascending}")]
-        public async Task<IActionResult> GetGamesByPrice(bool ascending)
+        [HttpGet("by-price/{ascending}")]
+        public async Task<IActionResult> GetByPrice(bool ascending)
         {
-            var response = await _sortService.GetGamesByPrice(ascending);
+            var response = await _sortService.SortByPrice(ascending);
             if (response.StatusCode == Domain.Enum.StatusCode.OK)
             {
                 return Ok(response.Data);

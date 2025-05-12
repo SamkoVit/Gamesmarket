@@ -29,6 +29,7 @@ namespace Gamesmarket.Service.Implementations
                     .Users
                     .Include(x => x.Cart)
                         .ThenInclude(x => x.Orders)
+                    .AsNoTracking()
                     .FirstOrDefaultAsync(x => x.UserName == userName);
 
                 if (user == null)
@@ -77,6 +78,7 @@ namespace Gamesmarket.Service.Implementations
                 var user = await _userManager.Users // Find the user by username
                     .Include(x => x.Cart)
                         .ThenInclude(x => x.Orders)
+                    .AsNoTracking()
                     .FirstOrDefaultAsync(x => x.Email == userName);
 
                 if (user == null)

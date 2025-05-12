@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Gamesmarket.Controllers
 {
-    [Route("api/game")]
+    [Route("api/games")]
     [ApiController]
     public class GameController : ControllerBase
     {
@@ -18,7 +18,7 @@ namespace Gamesmarket.Controllers
             _gameService = gameService;
         }
 
-        [HttpGet("getGames")]
+        [HttpGet]
         public async Task<IActionResult> GetGames()
         {
             var response = await _gameService.GetGames(); //Get the list of games from the service
@@ -34,7 +34,7 @@ namespace Gamesmarket.Controllers
             }
         }
 
-        [HttpGet("getGame/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetGame(int id)
         {
             var response = await _gameService.GetGame(id); //Get a single game by its id from the service
@@ -51,7 +51,7 @@ namespace Gamesmarket.Controllers
         }
 
         [Authorize("StaffPolicy")]
-        [HttpDelete("delete/{id}")]
+        [HttpDelete("{id}")]
 		public async Task<IActionResult> Delete (int id)
         {
             var response = await _gameService.DeleteGame(id); //Delete a game by its id using the service
@@ -68,7 +68,7 @@ namespace Gamesmarket.Controllers
         }
 
         [Authorize("StaffPolicy")]
-        [HttpPost("createGame")]
+        [HttpPost]
         public async Task<IActionResult> CreateGame([FromForm] GameViewModel model)
         {
             var response = await _gameService.CreateGame(model);
@@ -85,7 +85,7 @@ namespace Gamesmarket.Controllers
         }
 
         [Authorize("StaffPolicy")]
-        [HttpPatch("editGame/{id}")]
+        [HttpPatch("{id}")]
         public async Task<IActionResult> EditGame(int id, [FromForm] GameViewModel model)
         {
             var response = await _gameService.Edit(id, model);

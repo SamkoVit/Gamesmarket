@@ -32,12 +32,16 @@ namespace Gamesmarket.DAL.Repositories
 
         public async Task<Order> Get(int id)
         {
-            return await _db.Orders.FirstOrDefaultAsync(x => x.Id == id);
+            return await _db.Orders
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public Task<List<Order>> Select()
         {
-            return _db.Orders.ToListAsync();
+            return _db.Orders
+                .AsNoTracking()
+                .ToListAsync();
         }
 
         public async Task<Order> Update(Order entity)

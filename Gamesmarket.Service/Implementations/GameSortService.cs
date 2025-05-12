@@ -7,23 +7,24 @@ using Gamesmarket.Interfaces.Services;
 
 namespace Gamesmarket.Service.Implementations
 {
-    public class SortService : ISortService
+    public class GameSortService : IGameSortService
     {
         private readonly IBaseRepository<Game> _gameRepository;
 
-        public SortService(IBaseRepository<Game> gameRepository)
+        public GameSortService(IBaseRepository<Game> gameRepository)
         {
             _gameRepository = gameRepository;
         }
 
         // Get games by descending Id
-        public async Task<IBaseResponse<IEnumerable<Game>>> GetGamesByIdDesc()
+        public async Task<IBaseResponse<IEnumerable<Game>>> SortByIdDescending()
         {
             var baseResponse = new BaseResponse<IEnumerable<Game>>();
             try
             {
                 var games = await _gameRepository.GetAll()
                                 .OrderByDescending(g => g.Id)
+                                .AsNoTracking()
                                 .ToListAsync();
                 baseResponse.Data = games;
                 return baseResponse;
@@ -39,12 +40,12 @@ namespace Gamesmarket.Service.Implementations
         }
 
         // Games by release date, ascending or descending
-        public async Task<IBaseResponse<IEnumerable<Game>>> GetGamesByReleaseDate(bool ascending)
+        public async Task<IBaseResponse<IEnumerable<Game>>> SortByReleaseDate(bool ascending)
         {
             var baseResponse = new BaseResponse<IEnumerable<Game>>();
             try
             {
-                var gamesQuery = _gameRepository.GetAll();
+                var gamesQuery = _gameRepository.GetAll().AsNoTracking();
 
                 var games = ascending
                     ? await gamesQuery.OrderBy(g => g.ReleaseDate).ToListAsync()
@@ -64,12 +65,12 @@ namespace Gamesmarket.Service.Implementations
         }
 
         // Games by price, ascending or descending
-        public async Task<IBaseResponse<IEnumerable<Game>>> GetGamesByPrice(bool ascending)
+        public async Task<IBaseResponse<IEnumerable<Game>>> SortByPrice(bool ascending)
         {
             var baseResponse = new BaseResponse<IEnumerable<Game>>();
             try
             {
-                var gamesQuery = _gameRepository.GetAll();
+                var gamesQuery = _gameRepository.GetAll().AsNoTracking();
 
                 var games = ascending
                     ? await gamesQuery.OrderBy(g => g.Price).ToListAsync()

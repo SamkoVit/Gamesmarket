@@ -4,14 +4,14 @@ import { IGame } from "../models/IGame";
 
 export default class SortService {
   static getGamesByIdDesc(): Promise<AxiosResponse<IGame[]>> {
-    return $api.get<IGame[]>("/sort/getGamesByIdDesc");
+    return $api.get<IGame[]>("/games/sort/by-id-desc");
   }
   static getGamesByReleaseDate(
     ascending: boolean,
   ): Promise<AxiosResponse<IGame[]>> {
-    return $api.get<IGame[]>(`/sort/getGamesByReleaseDate/${ascending}`);
+    return $api.get<IGame[]>(`/games/sort/by-release-date/${ascending}`);
   }
   static getGamesByPrice(ascending: boolean): Promise<AxiosResponse<IGame[]>> {
-    return $api.get<IGame[]>(`/sort/getGamesByPrice/${ascending}`);
+    return $api.get<IGame[]>(`/games/sort/by-price/${ascending}`);
   }
 }

@@ -68,7 +68,11 @@ Gamesmarket - the main project, which includes configuration and initialization 
 
 ## Running the Project(Local).
 
-1. Run the backend:
+1. Inside Gamesmarket/appsettings.json and appsettings.Development.json change the line DefaultConnection to:
+
+   "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Database=GamesShop;Trusted_Connection=True"
+   
+2. Run the backend:
 
 - Open the solution in Visual Studio or another IDE.
 
@@ -84,7 +88,7 @@ Gamesmarket - the main project, which includes configuration and initialization 
     ```
 This will start the server at https://localhost:7202
 
-2. Run the frontend:
+3. Run the frontend:
 
    In Gamesmarket\Gamesmarket.ReactWeb
    ```sh

@@ -22,6 +22,7 @@ namespace Gamesmarket.DAL.Repositories
         public async Task<Game> Get(int id)
         {
             return await _db.Games
+                .Include(g => g.GameGenres)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
@@ -29,6 +30,7 @@ namespace Gamesmarket.DAL.Repositories
         public Task<List<Game>> Select() 
         {
             return _db.Games
+                .Include(g => g.GameGenres)
                 .AsNoTracking()
                 .ToListAsync();
         }
@@ -50,7 +52,8 @@ namespace Gamesmarket.DAL.Repositories
 		}
         public IQueryable<Game> GetAll()
         {
-            return _db.Games;
+            return _db.Games
+                .Include(g => g.GameGenres);
         }
     }
 }

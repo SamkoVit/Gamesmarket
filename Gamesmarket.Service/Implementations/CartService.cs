@@ -25,10 +25,11 @@ namespace Gamesmarket.Service.Implementations
         {
             try
             {
-                var user = await _userManager // Find the user by username
-                    .Users
+                var user = await _userManager.Users // Find the user by username
                     .Include(x => x.Cart)
-                        .ThenInclude(x => x.Orders)
+                        .ThenInclude(c => c.CartItems)
+                        .ThenInclude(ci => ci.Game)
+                        .ThenInclude(g => g.GameGenres)
                     .AsNoTracking()
                     .FirstOrDefaultAsync(x => x.UserName == userName);
 
@@ -41,7 +42,7 @@ namespace Gamesmarket.Service.Implementations
                     };
                 }
 
-                var orders = user.Cart?.Orders; // Retrieve orders related to the user's cart
+                var orders = user.Cart?.CartItems; // Retrieve orders related to the user's cart
                 if (orders == null || !orders.Any())
                 {
                     return new BaseResponse<IEnumerable<OrderViewModel>>()
@@ -53,7 +54,7 @@ namespace Gamesmarket.Service.Implementations
 
                 // Map orders to view models
                 var games = _gameRepository.GetAll();
-                var response = CartQueriesUtilities.MapOrdersToViewModels(orders, games);
+                var response = CartQueriesUtilities.MapOrdersToViewModels(CartItem);
 
                 return new BaseResponse<IEnumerable<OrderViewModel>>()
                 {

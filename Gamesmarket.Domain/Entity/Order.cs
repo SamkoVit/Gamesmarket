@@ -1,19 +1,20 @@
-﻿namespace Gamesmarket.Domain.Entity
+﻿using Gamesmarket.Domain.Enum;
+
+namespace Gamesmarket.Domain.Entity
 {
     public class Order
     {
         public long Id { get; set; }
 
-        public long? GameId { get; set; }
-
+        public long UserId { get; set; }
+        public User User { get; set; }
+        
         public DateTime DateCreated { get; set; }
+        public decimal TotalAmount { get; set; } // Calculated sum of OrderItems at time of creation
 
-        public string Email { get; set; }
-
-        public string Name { get; set; }
-
-        public long? CartId { get; set; }
-
-        public virtual Cart Cart { get; set; }
+        public OrderStatus Status { get; set; }
+        
+        public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>(); // the actual items bought in this order
+        public ICollection<Payment> Payments { get; set; } = new List<Payment>();
     }
 }

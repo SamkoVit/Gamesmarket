@@ -10,7 +10,7 @@
 
         public string GameDeveloper { get; set; }
 
-        public string GameGenre { get; set; }
+        public List<string> GameGenres { get; set; }
 
         public decimal GamePrice { get; set; }
 
@@ -20,6 +20,6 @@
 
         public string Name { get; set; }
 
-        public string DateCreate { get; set; }
+        public DateTimeOffset DateCreated { get; set; }
     }
 }

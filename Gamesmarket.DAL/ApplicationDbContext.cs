@@ -14,8 +14,14 @@ namespace Gamesmarket.DAL
         }
         // Managing collection of objects in database with Entity Framework
         public DbSet<Game> Games { get; set; }
+        public DbSet<GameGenreTag> GameGenreTags { get; set; }
         public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<OwnedGame> OwnedGames { get; set; }
+        public DbSet<Friendship> Friendships { get; set; }
+        public DbSet<Payment> Payments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,19 +34,88 @@ namespace Gamesmarket.DAL
                 new IdentityRole<long> { Id = 3, Name = "Administrator", NormalizedName = "ADMINISTRATOR" }
             );
 
-            // Link the User and Cart entities
-            modelBuilder.Entity<User>(builder =>
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
+
+            modelBuilder.Entity<Game>()
+                .HasIndex(g => g.Name);
+
+            modelBuilder.Entity<Cart>()
+                .HasIndex(c => c.UserId);
+
+            modelBuilder.Entity<Order>()
+                .HasIndex(o => o.UserId);
+
+            modelBuilder.Entity<Friendship>()
+                .HasIndex(f => new { f.User1Id, f.User2Id })
+                .IsUnique();
+
+            // Link entities relationships
+            modelBuilder.Entity<Friendship>(builder =>
             {
-                builder.HasOne(u => u.Cart)
-                    .WithOne(b => b.User)
-                    .HasForeignKey<Cart>(b => b.UserId)
-                    .OnDelete(DeleteBehavior.Cascade);
+                builder.HasOne(f => f.User1)
+                .WithMany(u => u.FriendshipAsUser1)
+                .HasForeignKey(f => f.User1Id)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                builder.HasOne(f => f.User2)
+                .WithMany(u => u.FriendshipAsUser2)
+                .HasForeignKey(f => f.User2Id)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                builder.HasOne(f => f.ActionUser)
+                .WithMany()
+                .HasForeignKey(f => f.ActionUserId)
+                .OnDelete(DeleteBehavior.Restrict);
             });
 
-            // Cart entity configuration
+            modelBuilder.Entity<GameGenreTag>(builder =>
+            {
+                builder.HasOne(g => g.Game)
+                .WithMany(gm => gm.GameGenres)
+                .HasForeignKey(g => g.GameId);
+            });
+
+            modelBuilder.Entity<Payment>(builder =>
+            {
+                builder.HasOne(p => p.Order)
+                .WithMany(o => o.Payments)
+                .HasForeignKey(p => p.OrderId)
+                .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<Order>(builder =>
+            {
+                builder.ToTable("Orders").HasKey(x => x.Id);
+
+                builder.HasOne(r => r.User)
+                    .WithMany(t => t.Orders)
+                    .HasForeignKey(r => r.UserId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<OrderItem>(builder =>
+            {
+                builder.HasOne(or => or.Order)
+                .WithMany(o => o.OrderItems)
+                .HasForeignKey(or => or.OrderId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+                builder.HasOne(g => g.Game)
+                .WithMany(o => o.OrderItems)
+                .HasForeignKey(g => g.GameId)
+                .OnDelete(DeleteBehavior.Restrict);
+            });
+
             modelBuilder.Entity<Cart>(builder =>
             {
                 builder.ToTable("Carts").HasKey(x => x.Id);
+
+                builder.HasOne(u => u.User)
+                .WithOne(i => i.Cart)
+                .HasForeignKey<Cart>(u => u.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
 
                 builder.HasData(new Cart()
                 {
@@ -49,13 +124,35 @@ namespace Gamesmarket.DAL
                 });
             });
 
-            // Order entity configuration
-            modelBuilder.Entity<Order>(builder =>
+            modelBuilder.Entity<CartItem>(builder =>
             {
-                builder.ToTable("Orders").HasKey(x => x.Id);
+                builder.HasOne(c => c.Cart)
+                .WithMany(o => o.CartItems)
+                .HasForeignKey(c => c.CartId)
+                .OnDelete(DeleteBehavior.Cascade);
 
-                builder.HasOne(r => r.Cart).WithMany(t => t.Orders)
-                    .HasForeignKey(r => r.CartId);
+                builder.HasOne(g => g.Game)
+                .WithMany(o => o.CartItems)
+                .HasForeignKey(g => g.GameId)
+                .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<OwnedGame>(builder =>
+            {
+                builder.HasOne(og => og.User)
+                .WithMany(o => o.OwnedGames)
+                .HasForeignKey(og => og.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                builder.HasOne(g => g.Game)
+                .WithMany(o => o.OwnedGames)
+                .HasForeignKey(g => g.GameId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                builder.HasOne(og => og.GiftFromUser)
+                .WithMany()
+                .HasForeignKey(og => og.GiftFromUserId)
+                .OnDelete(DeleteBehavior.Restrict);
             });
 
             // Seed admin user

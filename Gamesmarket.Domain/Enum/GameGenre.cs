@@ -2,6 +2,7 @@
 
 namespace Gamesmarket.Domain.Enum
 {
+    [Flags]
     public enum GameGenre
     {
         RPG = 0,

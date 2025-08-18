@@ -7,25 +7,22 @@ namespace Gamesmarket.Utilities.Cart
 {
     public static class CartQueriesUtilities
     {
-        public static IEnumerable<OrderViewModel> MapOrdersToViewModels(IEnumerable<Order> orders, IEnumerable<Game> games)
+        // Map many cart items to view models (one view model for cart item)
+        public static IEnumerable<OrderViewModel> MapOrdersToViewModels(IEnumerable<CartItem> cartItem)
         {
-            return from p in orders
-                   join g in games on p.GameId equals g.Id
-                   select new OrderViewModel
-                   {
-                       Id = p.Id,
-                       GameId = g.Id,
-                       GameName = g.Name,
-                       GamePrice = g.Price,
-                       ImagePath = g.ImagePath
-                   };
+            if(cartItem == null) return Enumerable.Empty<OrderViewModel>();
+            
+            return cartItem.Select(x => MapOrderToViewModel(x));
         }
 
-        public static OrderViewModel MapOrderToViewModel(Order order, Game game)
+        // Map single cart item
+        public static OrderViewModel MapOrderToViewModel(CartItem CartItem)
         {
+            var game = CartItem.Game;
+            
             return new OrderViewModel
             {
-                Id = order.Id,
+                Id = CartItem.Id,
                 GameName = game.Name,
                 GameDeveloper = game.Developer,
                 GameGenre = game.GameGenre.ToString(),

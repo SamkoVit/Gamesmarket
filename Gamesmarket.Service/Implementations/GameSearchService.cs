@@ -51,7 +51,7 @@ namespace Gamesmarket.Service.Implementations
             try
             {
                 var games = await _gameRepository.GetAll()
-                                .Where(g => g.GameGenre == genre)
+                                .Where(g => g.GameGenres.Any(tag => tag.Genre == genre))
                                 .AsNoTracking()
                                 .ToListAsync();
                 if (games == null || !games.Any())

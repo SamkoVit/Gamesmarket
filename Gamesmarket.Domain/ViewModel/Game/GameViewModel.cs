@@ -16,7 +16,7 @@ namespace Gamesmarket.Domain.ViewModel.Game
 
         public DateTimeOffset ReleaseDate { get; set; }
 
-        public string GameGenre { get; set; }
+        public List<string> SelectedGenres { get; set; } = new();
 
         public IFormFile ImageFile { get; set; }
 

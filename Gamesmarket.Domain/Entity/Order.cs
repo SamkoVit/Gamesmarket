@@ -9,9 +9,8 @@ namespace Gamesmarket.Domain.Entity
         public long UserId { get; set; }
         public User User { get; set; }
         
-        public DateTime DateCreated { get; set; }
-        public decimal TotalAmount { get; set; } // Calculated sum of OrderItems at time of creation
-
+        public DateTimeOffset DateCreated { get; set; } = DateTimeOffset.UtcNow;
+        public decimal TotalPrice { get; set; } // Calculated sum of OrderItems at time of creation
         public OrderStatus Status { get; set; }
         
         public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>(); // the actual items bought in this order

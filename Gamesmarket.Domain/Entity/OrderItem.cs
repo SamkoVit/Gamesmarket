@@ -9,7 +9,7 @@ public class OrderItem
     
     public int GameId { get; set; }
     public Game Game { get; set; }
-    
-    public int Quantity { get; set; }
+
+    public int Quantity { get; set; } = 1;
     public decimal PriceAtPurchase { get; set; } // Price at the moment of purchase (can differ from current Game.Price)
 }
